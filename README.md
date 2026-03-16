@@ -1,82 +1,126 @@
-# 🛡️ Global Sentinel: Multi-Tiered AML/CFT Risk & Intelligence Framework
+# 🛡️ Global Sentinel — Multi‑Tiered AML/CFT Risk & Intelligence Framework
 
-An end-to-end Pythonic implementation of algorithmic risk scoring, bridging the gap between regulatory theory and enterprise-scale data engineering.
+**Global Sentinel** is a production‑grade, enterprise‑oriented AML/CFT intelligence stack that delivers deterministic and probabilistic risk scoring across **Customer**, **Product**, and **Country** domains. Built as a modular, data‑centric rating engine, it fuses regulatory best practice with high‑throughput data engineering to automate KYC/KYB, sanctions screening, adverse‑media detection, and enhanced due diligence (EDD) workflows at scale.
 
 ---
 
-## 🚀 Overview
-Global Sentinel is an advanced, high-performance risk-rating ecosystem designed to automate the identification of financial crime threats across **200,000+ customer profiles** and **1.1 million product nodes**.
+## 🚀 Executive Summary
 
-This framework doesn't just calculate scores; it simulates a sophisticated **Regulatory Compliance Layer** that mirrors the rigorous requirements of global standard-setters and top-tier financial regulators. By integrating **KYC (Know Your Customer)**, **KYB (Know Your Business)**, and **Sanctions Screening**, the system provides a holistic 360-degree view of institutional risk.
+Global Sentinel ingests heterogeneous regulatory and operational feeds, normalizes them into structured risk matrices, and executes a multi‑pillar scoring pipeline that produces explainable, auditable **Residual Risk** outputs for downstream case management and SAR filing. 
+
+The system is optimized for high-cardinality datasets (200k+ customer profiles; 1.1M+ product nodes) and supports real‑time and batch evaluation modes for transaction monitoring, onboarding, and periodic reviews.
+
+### **Core Capabilities**
+* **End‑to‑end KYC/KYB lifecycle orchestration** * **Deterministic sanctions & PEP screening** with fuzzy and tokenized matching logic.
+* **Source of Wealth (SoW) & Source of Funds (SoF)** validation logic and evidence scoring.
+* **Product risk taxonomy & Country risk fusion** for composite residual risk calculation.
+* **Audit‑first design**: Immutable decision metadata, `override_reason`, and EDD trails.
 
 ---
 
 ## 🏛️ Regulatory Alignment & Standards
-The scoring logic and methodology are engineered to align with the risk-based approach (RBA) advocated by:
 
-- **FATF (Financial Action Task Force):** 40 Recommendations on AML/CFT  
-- **The Wolfsberg Group:** Standards on Anti-Money Laundering and Sanctions Screening  
-- **JMLSG (Joint Money Laundering Steering Group):** Guidance for the UK financial sector  
-- **FinCEN & EU AML Directives (6AMLD):** Adherence to UBO transparency and high-risk jurisdiction monitoring  
+Scoring logic, controls, and governance are engineered to align with global AML/CFT frameworks and major supervisory expectations:
 
----
+### **Global Standard‑Setters**
+* **FATF** — Risk‑Based Approach and 40 Recommendations.
+* **Wolfsberg Group** — AML & sanctions screening principles; Correspondent Banking Guidance.
+* **JMLSG** — UK sector guidance and typologies.
+* **EU AML Directives (including 6AMLD)** — UBO transparency and cross‑border controls.
 
-## 🧩 The Three Pillars of Intelligence
-
-### 1. 🌍 Macro-Jurisdictional Assessment (`Country_Risk_Rating.py`)
-- **Data Fusion:** Aggregates Transparency International’s CPI, Basel AML Index, FATF Greylist/Blacklist status  
-- **Logic:** Normalization algorithms transform qualitative data into a quantitative **Inherent Geography Risk Score (1–10)**  
-
-### 2. 💳 Product & Service Risk Taxonomy (`Product_Risk_Calculator.py`)
-- **Risk Factors:** Liquidity, Anonymity, Velocity of Funds, Cross-Border Capability  
-- **Assessment:** Distinguishes low-risk retail products (e.g., Term Deposits) vs high-risk vehicles (e.g., Correspondent Banking, Crypto-assets, Trade Finance)  
-
-### 3. 👤 Comprehensive Customer Risk Engine (`risk_engine.py`)
-- **Weighted Pillar Scoring:** Geography (1.4x), Behavior (1.5x), Product (1.2x)  
-- **Compliance Overrides:** Foreign PEPs, Sanctions Hits, Shell Banks, Opaque UBO structures → automatically High-Risk  
+### **Major Supervisory Markets & Regulators**
+* **FinCEN (USA)** — SAR/CTR expectations and beneficial ownership rules.
+* **FCA (UK)** — Conduct and AML supervision expectations.
+* **MAS (Singapore)** — Technology and transaction monitoring guidance.
+* **HKMA (Hong Kong)** — Cross‑border and correspondent banking controls.
+* **AUSTRAC (Australia)** — Reporting and threshold rules.
+* **BaFin (Germany) & FINMA (Switzerland)** — Prudential AML expectations.
 
 ---
 
-## 🛠️ Technical Prowess (Under the Hood)
-- **Relational Integrity:** Vectorized pandas joins across a 4-table schema  
-- **Auditability by Design:** Every decision stamped with `override_reason` for transparent audit trails  
-- **Scalability:** Handles high-cardinality datasets, simulating mid-to-large-scale digital bank throughput  
-- **Modular Architecture:** Rating Matrices (JSON) separated from Execution Logic (Python) for real-time updates  
+## 🧩 Intelligence Pillars (Customer, Product, Country)
+
+### 1. Customer Risk Rating (Comprehensive)
+* **Identity & Ownership**: Deterministic UBO resolution, nominee detection, trust settlor/beneficiary mapping, and bearer‑instrument flags.
+* **PEP & RCA Handling**: Tiered PEP scoring, RCA propagation, time‑since‑office decay functions, and relationship graph analytics.
+* **Behavioral Profiling**: Baseline expected activity, velocity/pattern detection, and smurfing heuristics.
+* **Screening & OSINT**: Sanctions/watchlist matching and adverse media scoring.
+
+### 2. Product & Service Risk Taxonomy
+* **Multi‑dimensional scoring** across Liquidity, Anonymity, Convertibility, Cross‑Border Exposure, and Settlement Finality.
+* **High‑risk product examples**: Correspondent banking, trade finance, crypto on/off ramps, and high‑value goods settlement.
+
+### 3. Macro‑Jurisdictional Assessment
+* **Data fusion** of CPI, Basel AML Index, FATF listings, and sanctions regimes.
+* **Normalization & scaling** to produce an Inherent Geography Risk Score (1–10) with event‑driven updates (e.g., greylist changes).
 
 ---
 
-## 📂 Project Anatomy
-```
+## ⚙️ Scoring Methodology
+
+* **Three‑pillar composite**: Geography × Behavior × Product with precision multipliers.
+* **Residual Risk** = `WeightedAggregate(GeographyScore, BehaviorScore, ProductScore) + Hard-coded Overrides`.
+* **Hard Overrides**: Sanctions hits, confirmed foreign PEPs, shell bank flags, and opaque UBOs trigger immediate **High-Risk** classification.
+* **Evidence scoring**: Each risk attribute carries provenance metadata (source, timestamp, confidence) to support regulatory challenge.
+
+---
+
+## 🛠️ Architecture & Data Engineering
+
+* **Modular Separation**: JSON rating matrices and rulebooks decoupled from execution logic for runtime reconfiguration.
+* **Vectorized Data Processing**: Bulk joins and transforms implemented with optimized **Pandas/NumPy** DataFrame operations for columnar performance.
+* **Scalability Patterns**: Parallel batch workers and idempotent processing for replays and backfills.
+* **Observability**: Lineage and audit logs for every decision and override.
+
+---
+
+## 📂 Project Layout
+```text
 .
-├── Data/                          
-│   ├── Table1_Core_Customer_Data.csv      # PII & KYB Demographics
-│   ├── Table2_Account_Product_Data.csv    # Relational 1:N Product Nodes
-│   ├── Table3_Transactional_Summary.csv   # Behavioral & Cash Intensity Data
-│   ├── Table4_Compliance_Screening.csv    # PEP/Sanctions/Adverse Media
-│   ├── Country_Risk_Rating.json           # Aggregated Geography Matrix
-│   ├── Product_Risk_Rating.json           # Product Risk Taxonomy
-│   └── Basel_Index.json / FATF_Lists.json # Raw Regulatory Source Feeds
-├── Country_Risk_Rating.py                 # Macro-Risk Orchestrator
-├── Product_Risk_Calculator.py             # Product Vulnerability Scorer
-└── risk_engine.py                         # Final Residual Risk Processor
+├── Data/
+│   ├── Table1_Core_Customer_Data.csv       # Demographics & PII
+│   ├── Table2_Account_Product_Data.csv      # Relational Product Nodes
+│   ├── Table3_Transactional_Summary.csv     # Behavioral Patterns
+│   ├── Table4_Compliance_Screening.csv      # PEP/Sanctions Hits
+│   ├── Country_Risk_Rating.json            # Geography Risk Matrix
+│   ├── Product_Risk_Rating.json            # Product Risk Taxonomy
+│   └── Basel_Index.json / FATF_Lists.json  # Regulatory Feeds
+├── Country_Risk_Rating.py                  # Geography Orchestrator
+├── Product_Risk_Calculator.py               # Product Vulnerability Scorer
+└── risk_engine.py                          # Master Residual Risk Engine
 ```
-
----
 
 ## ⚡ Quick Start
+
+### 1. Installation
 ```bash
-# Clone the intelligence suite
-git clone https://github.com/YOUR_USERNAME/Global-Sentinel.git
-
-# Install dependencies
+git clone [https://github.com/YOUR_USERNAME/Global-Sentinel.git](https://github.com/YOUR_USERNAME/Global-Sentinel.git)
+cd Global-Sentinel
 pip install -r requirements.txt
+```
 
+### 2. Execution
+```bash
 # Execute the full rating cycle
 python risk_engine.py
 ```
 
----
 
-## 🌍🔒 Disclaimer
-This project is a demonstration of advanced RegTech capabilities using **synthetic data**. It represents a commitment to building a safer financial world through data science and rigorous compliance engineering.
-```
+### 3. Configuration
+Tune Logic: Edit Product_Risk_Rating.json and Country_Risk_Rating.json to adjust weights and thresholds without modifying core Python code.
+
+## 🧾 Compliance & Auditability
+Global Sentinel is designed to be regulator‑ready. The system supports defensible decisioning for:
+
+* Onboarding & KYC/KYB
+
+* Periodic Review Cycle
+
+* Transaction Monitoring (TM)
+
+* Suspicious Activity Reporting (SAR)
+
+## ⚖️ License & Disclaimer
+Distributed under the Apache License 2.0.
+
+> **⚠️ Disclaimer:** *This repository is a demonstration of RegTech engineering using synthetic data. It is not legal advice and must be adapted to local laws, supervisory guidance, and internal risk appetite before production deployment.*
