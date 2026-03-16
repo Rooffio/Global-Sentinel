@@ -13,7 +13,7 @@ Global Sentinel operates as a **high-throughput multi-stage pipeline** designed 
 Unlike "black-box" solutions, Global Sentinel prioritizes **explainability**—ensuring that every risk rating is backed by a transparent audit trail of specific risk factors and mitigating controls.
 
 ### **Enterprise-Scale Resilience**
-The framework is architected for **high-cardinality datasets**, providing the computational power required for complex entity resolution and periodic portfolio reviews. It currently supports the orchestration of simulations involving:
+The framework is architected for **high-cardinality datasets**, providing the computational power required for complex entity resolution and periodic portfolio reviews. It was tested by the orchestration of simulations involving the following datasets with a completion time of approximately 2 minutes:
 * **200,000+ Unique Customer Profiles**: Comprehensive identity mapping including PII, UBO (Ultimate Beneficial Ownership) structures, and KYB entity hierarchies.
 * **1.1 Million+ Product-Account Relationships**: Mapping complex 1:N relational nodes to detect risk propagation across product lines and nested accounts.
 
